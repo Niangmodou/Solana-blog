@@ -38,16 +38,6 @@ pub mod solana_blog {
     }
 
     // User code
-    pub fn signup_user(ctx: Context<SignupUser>, name: String, avatar: String) -> ProgramResult {
-        let user_account = &mut ctx.accounts.user_account;
-        let authority = &mut ctx.accounts.authority;
-
-        user_account.name = name;
-        user_account.avatar = avatar;
-        user_account.authority = authority.key();
-        Ok(())
-    }
-
     // Defining the user object
     #[derive(account)]
     pub struct SignupUser<'info> {
@@ -63,6 +53,33 @@ pub mod solana_blog {
         pub avatar: String,
         pub authority: PubKey,
     }
+
+    pub fn signup_user(ctx: Context<SignupUser>, name: String, avatar: String) -> ProgramResult {
+        let user_account = &mut ctx.accounts.user_account;
+        let authority = &mut ctx.accounts.authority;
+
+        user_account.name = name;
+        user_account.avatar = avatar;
+        user_account.authority = authority.key();
+
+        Ok(())
+    }
+
+    pub fn update_user(ctx: Context<UpdateUser>, name: String, avatar: String) -> ProgramResult {
+        let user_account = &mut ctx.accounts.user_account;
+
+        user_account.name = name;
+        user_account.avatar = avatar;
+
+        Ok(())
+    }
+    #[derive(Accounts)]
+    pub struct UpdateUser<'info> {
+        #[account(mut, has_one = authority,)]
+        pub user_account: Account<'info, UserState>,
+        pub authority: Signup<'info>,
+    }
+
     
     // Program entry point
     pub fn initialize(ctx: Context<Initialize>) -> ProgramResult {
