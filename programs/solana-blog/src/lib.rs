@@ -51,7 +51,7 @@ pub mod solana_blog {
     pub struct UserState{
         pub name: String,
         pub avatar: String,
-        pub authority: PubKey,
+        pub authority: Pubkey,
     }
 
     pub fn signup_user(ctx: Context<SignupUser>, name: String, avatar: String) -> ProgramResult {
