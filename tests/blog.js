@@ -126,8 +126,8 @@ describe("blog tests", () => {
         assert.equal(upPost3.content, content);
         assert.equal(upPost3.user.toString(), userAccount.publicKey.toString());
         assert.equal(
-        upPost3.authority.toString(),
-        provider.wallet.publicKey.toString()
+            upPost3.authority.toString(),
+            provider.wallet.publicKey.toString()
         );
     })
 
